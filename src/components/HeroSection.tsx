@@ -1,0 +1,103 @@
+import { Star, Phone } from "lucide-react";
+import LeadForm from "./LeadForm";
+
+const HeroSection = () => {
+  return (
+    <section className="relative min-h-screen hero-gradient overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+      </div>
+
+      <div className="container relative z-10 py-8 lg:py-12">
+        {/* Header Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 lg:mb-12">
+          <div className="flex items-center gap-3">
+            <img 
+              src="https://img1.wsimg.com/isteam/ip/75919328-b237-4d1a-b78d-47408bd658d8/3DaysLater-10.png/:/rs=h:105,cg:true,m/qt=q:100/ll"
+              alt="3 Days Later Roofing"
+              className="h-12 md:h-16 object-contain brightness-0 invert"
+            />
+          </div>
+          <a
+            href="tel:+14846428141"
+            className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold transition-all"
+          >
+            <Phone className="w-5 h-5" />
+            <span>(484) 642-8141</span>
+          </a>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Left: Value Proposition */}
+          <div className="text-white text-center lg:text-left">
+            {/* Social Proof Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 animate-fade-up">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                ))}
+              </div>
+              <span className="text-sm font-medium">5.0 Rating • 50+ Reviews</span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-fade-up delay-100">
+              Fast, Reliable
+              <br />
+              <span className="text-gradient">Roof Repair</span>
+              <br />
+              & Free Same-Day Estimates
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg md:text-xl text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-up delay-200">
+              Trusted by Lehigh Valley homeowners. Licensed, insured, and GAF Certified. 
+              Get your free inspection scheduled today.
+            </p>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 animate-fade-up delay-300">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🏆</span>
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-white/60">GAF Certified</p>
+                  <p className="text-sm font-semibold">Master Elite</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                  <span className="text-lg">✓</span>
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-white/60">PA License</p>
+                  <p className="text-sm font-semibold">#181985</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🛡️</span>
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-white/60">Warranty</p>
+                  <p className="text-sm font-semibold">Lifetime</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Lead Form */}
+          <div className="animate-fade-up delay-200">
+            <LeadForm />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
