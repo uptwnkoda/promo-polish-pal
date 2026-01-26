@@ -1,7 +1,16 @@
 import { useState } from "react";
+import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckCircle2, Phone, Shield, Clock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+const leadSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters"),
+  email: z.string().trim().email("Please enter a valid email").max(255, "Email must be less than 255 characters"),
+});
 
 const LeadForm = () => {
   const [formData, setFormData] = useState({
@@ -11,16 +20,48 @@ const LeadForm = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    
+    // Validate input
+    const result = leadSchema.safeParse(formData);
+    if (!result.success) {
+      setError(result.error.errors[0].message);
+      return;
+    }
+    
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const { error: insertError } = await supabase
+        .from('leads')
+        .insert({
+          name: result.data.name,
+          phone: result.data.phone,
+          email: result.data.email,
+        });
+      
+      if (insertError) {
+        console.error('Error submitting lead:', insertError);
+        setError("Something went wrong. Please try again.");
+        toast({
+          title: "Error",
+          description: "Failed to submit your request. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        setIsSubmitted(true);
+      }
+    } catch (err) {
+      console.error('Error submitting lead:', err);
+      setError("Something went wrong. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1500);
+    }
   };
 
   if (isSubmitted) {
@@ -57,6 +98,12 @@ const LeadForm = () => {
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm text-center">
+            {error}
+          </div>
+        )}
+        
         <div>
           <Input
             type="text"
@@ -64,6 +111,7 @@ const LeadForm = () => {
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
+            maxLength={100}
             className="h-12 bg-secondary border-0 placeholder:text-muted-foreground/60"
           />
         </div>
@@ -74,6 +122,7 @@ const LeadForm = () => {
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             required
+            maxLength={20}
             className="h-12 bg-secondary border-0 placeholder:text-muted-foreground/60"
           />
         </div>
@@ -84,6 +133,7 @@ const LeadForm = () => {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
+            maxLength={255}
             className="h-12 bg-secondary border-0 placeholder:text-muted-foreground/60"
           />
         </div>
