@@ -32,8 +32,20 @@ import {
   Filter,
   Phone,
   Mail as MailIcon,
-  AlertCircle
+  AlertCircle,
+  Trash2
 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
 
 interface Lead {
@@ -64,6 +76,7 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -159,11 +172,39 @@ export default function Admin() {
     }
   };
 
+  const deleteLead = async (leadId: string) => {
+    setDeletingId(leadId);
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .delete()
+        .eq('id', leadId);
+
+      if (error) {
+        console.error('Error deleting lead:', error);
+        toast({
+          title: "Error",
+          description: "Failed to delete lead.",
+          variant: "destructive",
+        });
+      } else {
+        setLeads(prevLeads => prevLeads.filter(lead => lead.id !== leadId));
+        toast({
+          title: "Lead Deleted",
+          description: "The lead has been permanently deleted.",
+        });
+      }
+    } catch (err) {
+      console.error('Error deleting lead:', err);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
-
   const getStatusBadge = (status: string) => {
     const option = STATUS_OPTIONS.find(opt => opt.value === status);
     return (
@@ -406,22 +447,54 @@ export default function Admin() {
                           {formatDate(lead.created_at)}
                         </TableCell>
                         <TableCell>
-                          <Select 
-                            value={lead.status} 
-                            onValueChange={(value) => updateLeadStatus(lead.id, value)}
-                            disabled={updatingId === lead.id}
-                          >
-                            <SelectTrigger className="w-32">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {STATUS_OPTIONS.map(option => (
-                                <SelectItem key={option.value} value={option.value}>
-                                  {option.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <div className="flex items-center gap-2">
+                            <Select 
+                              value={lead.status} 
+                              onValueChange={(value) => updateLeadStatus(lead.id, value)}
+                              disabled={updatingId === lead.id}
+                            >
+                              <SelectTrigger className="w-32">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {STATUS_OPTIONS.map(option => (
+                                  <SelectItem key={option.value} value={option.value}>
+                                    {option.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  className="text-muted-foreground hover:text-destructive"
+                                  disabled={deletingId === lead.id}
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete Lead</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Are you sure you want to delete the lead for <strong>{lead.name}</strong>? 
+                                    This action cannot be undone.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction 
+                                    onClick={() => deleteLead(lead.id)}
+                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
