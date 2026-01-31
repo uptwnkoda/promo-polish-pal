@@ -1,7 +1,14 @@
 import { Star, Phone } from "lucide-react";
-import LeadForm from "./LeadForm";
+import MultiStepFunnel from "./funnel/MultiStepFunnel";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const HeroSection = () => {
+  const { trackCallClick } = useAnalytics();
+
+  const handleCallClick = () => {
+    trackCallClick('hero');
+  };
+
   return (
     <section className="relative min-h-screen hero-gradient overflow-hidden">
       {/* Background Pattern */}
@@ -23,6 +30,7 @@ const HeroSection = () => {
           </div>
           <a
             href="tel:+14846428141"
+            onClick={handleCallClick}
             className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold transition-all"
           >
             <Phone className="w-5 h-5" />
@@ -90,9 +98,9 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right: Lead Form */}
+          {/* Right: Multi-Step Funnel */}
           <div className="animate-fade-up delay-200">
-            <LeadForm />
+            <MultiStepFunnel />
           </div>
         </div>
       </div>
