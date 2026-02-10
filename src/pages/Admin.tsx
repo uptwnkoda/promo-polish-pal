@@ -93,6 +93,23 @@ export default function Admin() {
 
   useEffect(() => {
     if (user && isAdmin) {
+      const playNotificationSound = () => {
+        try {
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(830, ctx.currentTime);
+          osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.1);
+          osc.frequency.setValueAtTime(830, ctx.currentTime + 0.2);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.4);
+        } catch (e) { /* silent fallback */ }
+      };
+
       fetchLeads();
 
       // Real-time subscription
@@ -104,6 +121,7 @@ export default function Admin() {
           (payload) => {
             const newLead = payload.new as Lead;
             setLeads(prev => [newLead, ...prev]);
+            playNotificationSound();
             toast({ title: "New Lead!", description: `${newLead.name} just submitted a request.` });
             if ('Notification' in window && Notification.permission === 'granted') {
               new Notification('New Lead Received', { body: `${newLead.name} — ${newLead.phone}`, icon: '/favicon.ico' });
