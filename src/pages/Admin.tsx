@@ -77,6 +77,7 @@ export default function Admin() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -121,6 +122,7 @@ export default function Admin() {
           (payload) => {
             const newLead = payload.new as Lead;
             setLeads(prev => [newLead, ...prev]);
+            setUnreadCount(prev => prev + 1);
             playNotificationSound();
             toast({ title: "New Lead!", description: `${newLead.name} just submitted a request.` });
             if ('Notification' in window && Notification.permission === 'granted') {
@@ -332,9 +334,22 @@ export default function Admin() {
       {/* Header */}
       <header className="bg-card border-b sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-foreground">Admin Dashboard</h1>
-            <p className="text-sm text-muted-foreground">{user?.email}</p>
+          <div className="flex items-center gap-3">
+            <div>
+              <h1 className="text-xl font-bold text-foreground">Admin Dashboard</h1>
+              <p className="text-sm text-muted-foreground">{user?.email}</p>
+            </div>
+            {unreadCount > 0 && (
+              <button
+                onClick={() => setUnreadCount(0)}
+                className="relative"
+                title="Click to dismiss"
+              >
+                <Badge className="bg-destructive text-destructive-foreground hover:bg-destructive/90 cursor-pointer animate-pulse">
+                  {unreadCount} new {unreadCount === 1 ? 'lead' : 'leads'}
+                </Badge>
+              </button>
+            )}
           </div>
           <Button variant="outline" onClick={handleSignOut}>
             <LogOut className="w-4 h-4 mr-2" />
