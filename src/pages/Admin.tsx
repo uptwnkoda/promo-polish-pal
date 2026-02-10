@@ -84,9 +84,51 @@ export default function Admin() {
     }
   }, [user, isLoading, navigate]);
 
+  // Request notification permission
+  useEffect(() => {
+    if (user && isAdmin && 'Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, [user, isAdmin]);
+
   useEffect(() => {
     if (user && isAdmin) {
       fetchLeads();
+
+      // Real-time subscription
+      const channel = supabase
+        .channel('leads-realtime')
+        .on(
+          'postgres_changes',
+          { event: 'INSERT', schema: 'public', table: 'leads' },
+          (payload) => {
+            const newLead = payload.new as Lead;
+            setLeads(prev => [newLead, ...prev]);
+            toast({ title: "New Lead!", description: `${newLead.name} just submitted a request.` });
+            if ('Notification' in window && Notification.permission === 'granted') {
+              new Notification('New Lead Received', { body: `${newLead.name} — ${newLead.phone}`, icon: '/favicon.ico' });
+            }
+          }
+        )
+        .on(
+          'postgres_changes',
+          { event: 'UPDATE', schema: 'public', table: 'leads' },
+          (payload) => {
+            const updated = payload.new as Lead;
+            setLeads(prev => prev.map(l => l.id === updated.id ? updated : l));
+          }
+        )
+        .on(
+          'postgres_changes',
+          { event: 'DELETE', schema: 'public', table: 'leads' },
+          (payload) => {
+            const deleted = payload.old as Lead;
+            setLeads(prev => prev.filter(l => l.id !== deleted.id));
+          }
+        )
+        .subscribe();
+
+      return () => { supabase.removeChannel(channel); };
     }
   }, [user, isAdmin]);
 
