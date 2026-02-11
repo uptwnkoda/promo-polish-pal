@@ -45,6 +45,27 @@ const FALLBACK_REVIEWS: Review[] = [
     text: "After getting three quotes, 3 Days Later Roofing offered the best value and quality. They walked us through everything, and we felt confident in our decision.",
     relativeTime: "1 month ago",
   },
+  {
+    author: "David R.",
+    photoUrl: null,
+    rating: 5,
+    text: "Had a leak that two other companies couldn't figure out. These guys found it in minutes and had it fixed the same day. Honest, skilled, and affordable.",
+    relativeTime: "2 weeks ago",
+  },
+  {
+    author: "Karen W.",
+    photoUrl: null,
+    rating: 5,
+    text: "They replaced our entire roof in just two days. The quality of work is outstanding, and the neighborhood has been complimenting us ever since!",
+    relativeTime: "3 weeks ago",
+  },
+  {
+    author: "Tom H.",
+    photoUrl: null,
+    rating: 5,
+    text: "Best roofing experience I've ever had. They showed up on time, communicated every step, and left the property spotless. Will definitely use them again.",
+    relativeTime: "1 month ago",
+  },
 ];
 
 const GOOGLE_REVIEWS_URL =
