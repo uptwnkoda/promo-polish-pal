@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 // Use legacy Places API
-const BUSINESS_QUERY = "3 Days Later Roofing & Renovations Allentown";
+const BUSINESS_QUERY = "3 Days Later Roofing";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -20,8 +20,8 @@ serve(async (req) => {
       throw new Error("Google Places API key not configured");
     }
 
-    // Step 1: Find place via legacy Text Search
-    const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(BUSINESS_QUERY)}&key=${apiKey}`;
+    // Step 1: Find place via Find Place From Text
+    const searchUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(BUSINESS_QUERY)}&inputtype=textquery&locationbias=point:40.6084,-75.4902&fields=place_id&key=${apiKey}`;
     const searchRes = await fetch(searchUrl);
 
     if (!searchRes.ok) {
@@ -31,13 +31,13 @@ serve(async (req) => {
     }
 
     const searchData = await searchRes.json();
-    
 
-    if (searchData.status !== "OK" || !searchData.results?.length) {
+    if (searchData.status !== "OK" || !searchData.candidates?.length) {
       throw new Error(`Business not found. Status: ${searchData.status}. Query: ${BUSINESS_QUERY}`);
     }
 
-    const placeId = searchData.results[0].place_id;
+    const placeId = searchData.candidates[0].place_id;
+
 
     // Step 2: Fetch Place Details with reviews
     const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&key=${apiKey}`;
