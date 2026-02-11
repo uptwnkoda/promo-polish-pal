@@ -10,15 +10,15 @@ import realWork8 from "@/assets/real-work-8.jpg";
 import realWork9 from "@/assets/real-work-9.jpg";
 
 const photos = [
-  { src: realWork1, alt: "Completed roof installation", title: "Full Roof Installation", location: "Allentown, PA" },
-  { src: realWork2, alt: "Crew installing shingles on roof", title: "Shingle Installation", location: "Bethlehem, PA" },
-  { src: realWork3, alt: "Ridge cap sealing work", title: "Ridge Cap Sealing", location: "Easton, PA" },
-  { src: realWork4, alt: "Roofing project in progress", title: "Roof Replacement", location: "Whitehall, PA" },
-  { src: realWork5, alt: "Roof tear-off and preparation", title: "Tear-Off & Prep", location: "Emmaus, PA" },
-  { src: realWork6, alt: "Professional roofing work", title: "Storm Damage Repair", location: "Macungie, PA" },
-  { src: realWork7, alt: "New shingle installation", title: "New Shingle Laydown", location: "Nazareth, PA" },
-  { src: realWork8, alt: "Roofing underlayment work", title: "Underlayment Install", location: "Catasauqua, PA" },
-  { src: realWork9, alt: "Completed roofing project", title: "Finished Project", location: "Hellertown, PA" },
+  { src: realWork1, alt: "Installing Polyglass synthetic underlayment on roof deck", title: "Underlayment Installation", location: "Lehigh Valley, PA" },
+  { src: realWork2, alt: "Two crew members installing architectural shingles near the ridge", title: "Architectural Shingle Install", location: "Lehigh Valley, PA" },
+  { src: realWork3, alt: "Sealing ridge cap with caulk on completed shingle roof", title: "Ridge Cap Sealing", location: "Lehigh Valley, PA" },
+  { src: realWork4, alt: "Full crew tearing off old shingles down to plywood decking", title: "Full Tear-Off in Progress", location: "Lehigh Valley, PA" },
+  { src: realWork5, alt: "Three-man crew stripping old roofing material from roof deck", title: "Old Roof Removal", location: "Lehigh Valley, PA" },
+  { src: realWork6, alt: "Smoothing Polyglass underlayment on residential roof", title: "Underlayment Prep Work", location: "Lehigh Valley, PA" },
+  { src: realWork7, alt: "Exposed plywood decking on large building with steeple after tear-off", title: "Church Roof Tear-Off", location: "Lehigh Valley, PA" },
+  { src: realWork8, alt: "Worker repairing flashing around steeple base on exposed deck", title: "Steeple Flashing Repair", location: "Lehigh Valley, PA" },
+  { src: realWork9, alt: "Installing Grip-Rite synthetic underlayment on new plywood decking", title: "Synthetic Underlayment Roll-Out", location: "Lehigh Valley, PA" },
 ];
 
 const BeforeAfterGallery = () => {
