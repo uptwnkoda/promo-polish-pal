@@ -8,9 +8,6 @@ import realWork6 from "@/assets/real-work-6.jpg";
 import realWork7 from "@/assets/real-work-7.jpg";
 import realWork8 from "@/assets/real-work-8.jpg";
 import realWork9 from "@/assets/real-work-9.jpg";
-import realWork10 from "@/assets/real-work-10.jpg";
-import realWork11 from "@/assets/real-work-11.jpg";
-import realWork12 from "@/assets/real-work-12.jpg";
 
 const photos = [
   { src: realWork1, alt: "Completed roof installation" },
@@ -22,9 +19,6 @@ const photos = [
   { src: realWork7, alt: "New shingle installation" },
   { src: realWork8, alt: "Roofing underlayment work" },
   { src: realWork9, alt: "Completed roofing project" },
-  { src: realWork10, alt: "Detailed roof work" },
-  { src: realWork11, alt: "Roof restoration project" },
-  { src: realWork12, alt: "Quality roofing craftsmanship" },
 ];
 
 const BeforeAfterGallery = () => {
@@ -45,17 +39,17 @@ const BeforeAfterGallery = () => {
           </p>
         </div>
 
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {photos.map((photo, index) => (
             <button
               key={index}
               onClick={() => setSelectedPhoto(index)}
-              className="block w-full rounded-xl overflow-hidden card-elevated break-inside-avoid focus:outline-none focus:ring-2 focus:ring-accent transition-transform hover:scale-[1.02]"
+              className="block w-full aspect-[4/3] rounded-xl overflow-hidden card-elevated focus:outline-none focus:ring-2 focus:ring-accent transition-transform hover:scale-[1.02]"
             >
               <img
                 src={photo.src}
                 alt={photo.alt}
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover"
                 loading="lazy"
               />
             </button>
