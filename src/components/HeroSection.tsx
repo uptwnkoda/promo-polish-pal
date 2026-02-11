@@ -36,6 +36,9 @@ const HeroSection = () => {
             <Phone className="w-5 h-5" />
             <span>(484) 642-8141</span>
           </a>
+          <span className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium">
+            🇲🇽 Hablamos Español
+          </span>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">

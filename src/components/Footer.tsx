@@ -16,6 +16,9 @@ const Footer = () => {
               Trusted roofing experts serving the Lehigh Valley. 
               Honest pricing, professional workmanship, no pressure.
             </p>
+            <p className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 bg-white/10 rounded-full text-white/90 text-sm font-medium">
+              🇲🇽 Hablamos Español
+            </p>
           </div>
 
           {/* Contact Info */}
