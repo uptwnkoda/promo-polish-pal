@@ -6,6 +6,14 @@ type Message = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
+const QUICK_REPLIES = [
+  "🏠 Get a free estimate",
+  "⛈️ Storm damage help",
+  "🔧 What materials do you use?",
+  "💰 Do you work with insurance?",
+  "🇲🇽 ¿Hablan español?",
+];
+
 const ChatWidget = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -17,6 +25,7 @@ const ChatWidget = () => {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showQuickReplies, setShowQuickReplies] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -28,14 +37,16 @@ const ChatWidget = () => {
     if (open) inputRef.current?.focus();
   }, [open]);
 
-  const sendMessage = async () => {
-    const trimmed = input.trim();
+  const sendMessage = async (overrideText?: string) => {
+    const trimmed = (overrideText || input).trim();
     if (!trimmed || isLoading) return;
+    if (!overrideText) setInput("");
+    else setInput("");
+    setShowQuickReplies(false);
 
     const userMsg: Message = { role: "user", content: trimmed };
     const allMessages = [...messages, userMsg];
     setMessages(allMessages);
-    setInput("");
     setIsLoading(true);
 
     let assistantSoFar = "";
@@ -179,6 +190,19 @@ const ChatWidget = () => {
                     <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 </div>
+              </div>
+            )}
+            {showQuickReplies && !isLoading && messages.length <= 1 && (
+              <div className="flex flex-wrap gap-2 px-1">
+                {QUICK_REPLIES.map((reply) => (
+                  <button
+                    key={reply}
+                    onClick={() => sendMessage(reply)}
+                    className="px-3 py-1.5 text-xs font-medium rounded-full border border-accent/30 bg-accent/5 text-accent hover:bg-accent/10 transition-colors"
+                  >
+                    {reply}
+                  </button>
+                ))}
               </div>
             )}
             <div ref={messagesEndRef} />
