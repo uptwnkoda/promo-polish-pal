@@ -10,15 +10,15 @@ import realWork8 from "@/assets/real-work-8.jpg";
 import realWork9 from "@/assets/real-work-9.jpg";
 
 const photos = [
-  { src: realWork1, alt: "Completed roof installation" },
-  { src: realWork2, alt: "Crew installing shingles on roof" },
-  { src: realWork3, alt: "Ridge cap sealing work" },
-  { src: realWork4, alt: "Roofing project in progress" },
-  { src: realWork5, alt: "Roof tear-off and preparation" },
-  { src: realWork6, alt: "Professional roofing work" },
-  { src: realWork7, alt: "New shingle installation" },
-  { src: realWork8, alt: "Roofing underlayment work" },
-  { src: realWork9, alt: "Completed roofing project" },
+  { src: realWork1, alt: "Completed roof installation", title: "Full Roof Installation", location: "Allentown, PA" },
+  { src: realWork2, alt: "Crew installing shingles on roof", title: "Shingle Installation", location: "Bethlehem, PA" },
+  { src: realWork3, alt: "Ridge cap sealing work", title: "Ridge Cap Sealing", location: "Easton, PA" },
+  { src: realWork4, alt: "Roofing project in progress", title: "Roof Replacement", location: "Whitehall, PA" },
+  { src: realWork5, alt: "Roof tear-off and preparation", title: "Tear-Off & Prep", location: "Emmaus, PA" },
+  { src: realWork6, alt: "Professional roofing work", title: "Storm Damage Repair", location: "Macungie, PA" },
+  { src: realWork7, alt: "New shingle installation", title: "New Shingle Laydown", location: "Nazareth, PA" },
+  { src: realWork8, alt: "Roofing underlayment work", title: "Underlayment Install", location: "Catasauqua, PA" },
+  { src: realWork9, alt: "Completed roofing project", title: "Finished Project", location: "Hellertown, PA" },
 ];
 
 const BeforeAfterGallery = () => {
@@ -41,18 +41,23 @@ const BeforeAfterGallery = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {photos.map((photo, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedPhoto(index)}
-              className="block w-full aspect-[4/3] rounded-xl overflow-hidden card-elevated focus:outline-none focus:ring-2 focus:ring-accent transition-transform hover:scale-[1.02]"
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </button>
+            <div key={index} className="space-y-3">
+              <button
+                onClick={() => setSelectedPhoto(index)}
+                className="block w-full aspect-[4/3] rounded-xl overflow-hidden card-elevated focus:outline-none focus:ring-2 focus:ring-accent transition-transform hover:scale-[1.02]"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </button>
+              <div className="px-1">
+                <h3 className="font-bold text-foreground text-base">{photo.title}</h3>
+                <p className="text-sm text-muted-foreground">{photo.location}</p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
