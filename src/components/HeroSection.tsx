@@ -31,10 +31,10 @@ const HeroSection = () => {
           <a
             href="tel:+14846428141"
             onClick={handleCallClick}
-            className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold transition-all"
+            className="flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 rounded-full text-accent-foreground font-bold shadow-lg shadow-accent/30 transition-all hover:scale-105 animate-pulse-slow"
           >
             <Phone className="w-5 h-5" />
-            <span>(484) 642-8141</span>
+            <span className="text-base">(484) 642-8141</span>
           </a>
           <span className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium">
             🇲🇽 Hablamos Español
