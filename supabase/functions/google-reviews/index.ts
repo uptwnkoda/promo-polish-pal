@@ -6,8 +6,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// 3 Days Later Roofing & Repairs – Allentown, PA
-const PLACE_ID = "ChIJm7WTMbdGxokR-rHzOtz_x-o";
+// Use legacy Places API
+const BUSINESS_QUERY = "3 Days Later Roofing & Renovations Allentown";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -20,40 +20,60 @@ serve(async (req) => {
       throw new Error("Google Places API key not configured");
     }
 
-    // Use Places API (New) – Place Details
-    const url = `https://places.googleapis.com/v1/places/${PLACE_ID}?fields=rating,userRatingCount,reviews&key=${apiKey}`;
+    // Step 1: Find place via legacy Text Search
+    const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(BUSINESS_QUERY)}&key=${apiKey}`;
+    const searchRes = await fetch(searchUrl);
 
-    const response = await fetch(url, {
-      headers: {
-        "X-Goog-FieldMask": "rating,userRatingCount,reviews",
-      },
-    });
+    if (!searchRes.ok) {
+      const searchErr = await searchRes.text();
+      console.error("Find Place error:", searchErr);
+      throw new Error(`Find Place returned ${searchRes.status}`);
+    }
+
+    const searchData = await searchRes.json();
+    
+
+    if (searchData.status !== "OK" || !searchData.results?.length) {
+      throw new Error(`Business not found. Status: ${searchData.status}. Query: ${BUSINESS_QUERY}`);
+    }
+
+    const placeId = searchData.results[0].place_id;
+
+    // Step 2: Fetch Place Details with reviews
+    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&key=${apiKey}`;
+    const response = await fetch(detailsUrl);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Google Places API error:", errorText);
-      throw new Error(`Google API returned ${response.status}`);
+      console.error("Place Details error:", errorText);
+      throw new Error(`Place Details returned ${response.status}`);
     }
 
-    const data = await response.json();
+    const detailsData = await response.json();
+    
 
-    // Normalize the response
-    const reviews = (data.reviews || []).map((r: any) => ({
-      author: r.authorAttribution?.displayName || "Anonymous",
-      photoUrl: r.authorAttribution?.photoUri || null,
+    if (detailsData.status !== "OK") {
+      throw new Error(`Place Details status: ${detailsData.status}`);
+    }
+
+    const result = detailsData.result;
+
+    const reviews = (result.reviews || []).map((r: any) => ({
+      author: r.author_name || "Anonymous",
+      photoUrl: r.profile_photo_url || null,
       rating: r.rating || 5,
-      text: r.text?.text || r.originalText?.text || "",
-      relativeTime: r.relativePublishTimeDescription || "",
-      publishTime: r.publishTime || "",
+      text: r.text || "",
+      relativeTime: r.relative_time_description || "",
+      publishTime: r.time ? new Date(r.time * 1000).toISOString() : "",
     }));
 
-    const result = {
-      rating: data.rating || 0,
-      totalReviews: data.userRatingCount || 0,
+    const output = {
+      rating: result.rating || 0,
+      totalReviews: result.user_ratings_total || 0,
       reviews,
     };
 
-    return new Response(JSON.stringify(result), {
+    return new Response(JSON.stringify(output), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
