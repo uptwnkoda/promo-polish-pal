@@ -4,6 +4,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import GuaranteeSection from "@/components/GuaranteeSection";
+import BeforeAfterGallery from "@/components/BeforeAfterGallery";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
@@ -22,6 +23,7 @@ const Index = () => {
         <TestimonialsSection />
       </div>
       <GuaranteeSection />
+      <BeforeAfterGallery />
       <QuoteRequestForm />
       <FAQSection />
       <CTASection />
