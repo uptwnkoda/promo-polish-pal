@@ -17,7 +17,10 @@ serve(async (req) => {
   try {
     const apiKey = Deno.env.get("GOOGLE_PLACES_API_KEY");
     if (!apiKey) {
-      throw new Error("Google Places API key not configured");
+      console.warn("Google Places API key not configured, returning empty result for client-side fallback");
+      return new Response(JSON.stringify({ rating: 0, totalReviews: 0, reviews: [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     // Step 1: Find place via Find Place From Text
@@ -27,17 +30,23 @@ serve(async (req) => {
     if (!searchRes.ok) {
       const searchErr = await searchRes.text();
       console.error("Find Place error:", searchErr);
-      throw new Error(`Find Place returned ${searchRes.status}`);
+      // Return empty so client uses fallback
+      return new Response(JSON.stringify({ rating: 0, totalReviews: 0, reviews: [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const searchData = await searchRes.json();
 
     if (searchData.status !== "OK" || !searchData.candidates?.length) {
-      throw new Error(`Business not found. Status: ${searchData.status}. Query: ${BUSINESS_QUERY}`);
+      console.warn(`Business not found (profile may be under review). Status: ${searchData.status}`);
+      // Return empty so client uses fallback reviews
+      return new Response(JSON.stringify({ rating: 0, totalReviews: 0, reviews: [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const placeId = searchData.candidates[0].place_id;
-
 
     // Step 2: Fetch Place Details with reviews
     const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&key=${apiKey}`;
@@ -46,14 +55,18 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Place Details error:", errorText);
-      throw new Error(`Place Details returned ${response.status}`);
+      return new Response(JSON.stringify({ rating: 0, totalReviews: 0, reviews: [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const detailsData = await response.json();
-    
 
     if (detailsData.status !== "OK") {
-      throw new Error(`Place Details status: ${detailsData.status}`);
+      console.warn(`Place Details status: ${detailsData.status}`);
+      return new Response(JSON.stringify({ rating: 0, totalReviews: 0, reviews: [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const result = detailsData.result;
@@ -78,9 +91,10 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("Error fetching reviews:", error);
+    // Return empty instead of 500 so client gracefully falls back
     return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ rating: 0, totalReviews: 0, reviews: [] }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
