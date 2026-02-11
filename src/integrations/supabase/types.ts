@@ -41,6 +41,54 @@ export type Database = {
         }
         Relationships: []
       }
+      quote_requests: {
+        Row: {
+          additional_details: string | null
+          address: string
+          approximate_sqft: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone: string
+          project_type: string
+          roof_material: string | null
+          roof_stories: string | null
+          status: string
+          timeline: string | null
+        }
+        Insert: {
+          additional_details?: string | null
+          address: string
+          approximate_sqft?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          phone: string
+          project_type: string
+          roof_material?: string | null
+          roof_stories?: string | null
+          status?: string
+          timeline?: string | null
+        }
+        Update: {
+          additional_details?: string | null
+          address?: string
+          approximate_sqft?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string
+          project_type?: string
+          roof_material?: string | null
+          roof_stories?: string | null
+          status?: string
+          timeline?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
