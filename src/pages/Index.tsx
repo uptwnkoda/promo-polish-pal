@@ -8,6 +8,8 @@ import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
+import QuoteRequestForm from "@/components/QuoteRequestForm";
+import ChatWidget from "@/components/ChatWidget";
 
 const Index = () => {
   return (
@@ -20,10 +22,12 @@ const Index = () => {
         <TestimonialsSection />
       </div>
       <GuaranteeSection />
+      <QuoteRequestForm />
       <FAQSection />
       <CTASection />
       <Footer />
       <StickyMobileCTA />
+      <ChatWidget />
     </main>
   );
 };
