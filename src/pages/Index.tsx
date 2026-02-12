@@ -11,25 +11,46 @@ import Footer from "@/components/Footer";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 import QuoteRequestForm from "@/components/QuoteRequestForm";
 import ChatWidget from "@/components/ChatWidget";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
       <HeroSection />
-      <TrustStrip />
-      <WhyChooseUs />
-      <ProcessSection />
-      <div id="testimonials">
-        <TestimonialsSection />
-      </div>
-      <GuaranteeSection />
-      <BeforeAfterGallery />
-      <QuoteRequestForm />
-      <FAQSection />
-      <CTASection />
+      <ScrollReveal>
+        <TrustStrip />
+      </ScrollReveal>
+      <ScrollReveal>
+        <WhyChooseUs />
+      </ScrollReveal>
+      <ScrollReveal>
+        <ProcessSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <div id="testimonials">
+          <TestimonialsSection />
+        </div>
+      </ScrollReveal>
+      <ScrollReveal>
+        <GuaranteeSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <BeforeAfterGallery />
+      </ScrollReveal>
+      <ScrollReveal>
+        <QuoteRequestForm />
+      </ScrollReveal>
+      <ScrollReveal>
+        <FAQSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <CTASection />
+      </ScrollReveal>
       <Footer />
       <StickyMobileCTA />
       <ChatWidget />
+      <ExitIntentPopup />
     </main>
   );
 };

@@ -69,35 +69,13 @@ const HeroSection = () => {
               Get your free inspection scheduled today.
             </p>
 
-            {/* Trust Badges */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 animate-fade-up delay-300">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                  <span className="text-lg">🏆</span>
-                </div>
-                <div className="text-left">
-                  <p className="text-xs text-white/60">GAF Certified</p>
-                  <p className="text-sm font-semibold">Master Elite</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                  <span className="text-lg">✓</span>
-                </div>
-                <div className="text-left">
-                  <p className="text-xs text-white/60">PA License</p>
-                  <p className="text-sm font-semibold">#181985</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                  <span className="text-lg">🛡️</span>
-                </div>
-                <div className="text-left">
-                  <p className="text-xs text-white/60">Warranty</p>
-                  <p className="text-sm font-semibold">Lifetime</p>
-                </div>
-              </div>
+            {/* Compact Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 animate-fade-up delay-300 text-sm text-white/70">
+              <span className="flex items-center gap-1.5">🏆 GAF Certified</span>
+              <span className="hidden sm:inline text-white/30">•</span>
+              <span className="flex items-center gap-1.5">✓ Licensed & Insured</span>
+              <span className="hidden sm:inline text-white/30">•</span>
+              <span className="flex items-center gap-1.5">🛡️ Lifetime Warranty</span>
             </div>
           </div>
 

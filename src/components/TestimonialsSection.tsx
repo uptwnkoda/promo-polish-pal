@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Star, Quote, ExternalLink } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -164,6 +165,7 @@ const TestimonialsSection = () => {
         ) : (
           <Carousel
             opts={{ align: "start", loop: true }}
+            plugins={[Autoplay({ delay: 4000, stopOnInteraction: true })]}
             className="w-full max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-4 md:-ml-6">
