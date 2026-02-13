@@ -65,6 +65,7 @@ const Footer = () => {
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+            <a href="https://www.buildzoom.com/contractor/three-days-later-roofing" rel="nofollow" target="_blank" className="hover:text-white transition-colors">BuildZoom</a>
             <a href="/auth" className="hover:text-white transition-colors">Admin</a>
           </div>
         </div>
