@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Phone, Mail, User, Clock } from "lucide-react";
+import LeadNotes from "@/components/admin/LeadNotes";
+import LeadEstimates from "@/components/admin/LeadEstimates";
+import LeadTasks from "@/components/admin/LeadTasks";
+import LeadTimeline from "@/components/admin/LeadTimeline";
+import LeadFiles from "@/components/admin/LeadFiles";
 
 interface Lead {
   id: string;
@@ -120,15 +125,11 @@ export default function LeadDetail() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-2 text-sm">
                 <Mail className="w-4 h-4 text-muted-foreground" />
-                <a href={`mailto:${lead.email}`} className="hover:text-accent transition-colors">
-                  {lead.email}
-                </a>
+                <a href={`mailto:${lead.email}`} className="hover:text-accent transition-colors">{lead.email}</a>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Phone className="w-4 h-4 text-muted-foreground" />
-                <a href={`tel:${lead.phone}`} className="hover:text-accent transition-colors">
-                  {lead.phone}
-                </a>
+                <a href={`tel:${lead.phone}`} className="hover:text-accent transition-colors">{lead.phone}</a>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4 text-muted-foreground" />
@@ -140,7 +141,6 @@ export default function LeadDetail() {
                 </div>
               )}
             </div>
-
             {(lead.utm_source || lead.utm_medium || lead.utm_campaign) && (
               <div className="pt-4 border-t">
                 <h3 className="text-sm font-semibold text-muted-foreground mb-2">UTM Data</h3>
@@ -151,7 +151,6 @@ export default function LeadDetail() {
                 </div>
               </div>
             )}
-
             {lead.landing_page && (
               <div className="pt-4 border-t">
                 <h3 className="text-sm font-semibold text-muted-foreground mb-2">Landing Page</h3>
@@ -160,6 +159,12 @@ export default function LeadDetail() {
             )}
           </CardContent>
         </Card>
+
+        <LeadNotes leadId={lead.id} />
+        <LeadEstimates leadId={lead.id} />
+        <LeadTasks leadId={lead.id} />
+        <LeadTimeline leadId={lead.id} />
+        <LeadFiles leadId={lead.id} />
       </main>
     </div>
   );
