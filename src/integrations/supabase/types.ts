@@ -14,30 +14,531 @@ export type Database = {
   }
   public: {
     Tables: {
+      call_logs: {
+        Row: {
+          callrail_call_id: string
+          created_at: string
+          direction: string
+          duration: number
+          id: string
+          lead_id: string | null
+          phone_number: string
+          recording_url: string | null
+        }
+        Insert: {
+          callrail_call_id: string
+          created_at?: string
+          direction?: string
+          duration?: number
+          id?: string
+          lead_id?: string | null
+          phone_number: string
+          recording_url?: string | null
+        }
+        Update: {
+          callrail_call_id?: string
+          created_at?: string
+          direction?: string
+          duration?: number
+          id?: string
+          lead_id?: string | null
+          phone_number?: string
+          recording_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_logs_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cms_cities: {
+        Row: {
+          county: string
+          faqs: Json
+          hero_headline: string
+          hero_subheadline: string
+          id: string
+          lat: number
+          lng: number
+          local_content: Json
+          meta_description: string
+          meta_title: string
+          name: string
+          nearby_areas: Json
+          population: string | null
+          slug: string
+          state: string
+          updated_at: string
+          zip: string
+        }
+        Insert: {
+          county: string
+          faqs?: Json
+          hero_headline: string
+          hero_subheadline: string
+          id?: string
+          lat: number
+          lng: number
+          local_content: Json
+          meta_description: string
+          meta_title: string
+          name: string
+          nearby_areas?: Json
+          population?: string | null
+          slug: string
+          state?: string
+          updated_at?: string
+          zip: string
+        }
+        Update: {
+          county?: string
+          faqs?: Json
+          hero_headline?: string
+          hero_subheadline?: string
+          id?: string
+          lat?: number
+          lng?: number
+          local_content?: Json
+          meta_description?: string
+          meta_title?: string
+          name?: string
+          nearby_areas?: Json
+          population?: string | null
+          slug?: string
+          state?: string
+          updated_at?: string
+          zip?: string
+        }
+        Relationships: []
+      }
+      cms_financing: {
+        Row: {
+          calculator_defaults: Json
+          faqs: Json
+          hero_headline: string
+          hero_subheadline: string
+          id: string
+          meta_description: string
+          meta_title: string
+          options: Json
+          process_steps: Json
+          updated_at: string
+        }
+        Insert: {
+          calculator_defaults: Json
+          faqs?: Json
+          hero_headline: string
+          hero_subheadline: string
+          id?: string
+          meta_description: string
+          meta_title: string
+          options: Json
+          process_steps: Json
+          updated_at?: string
+        }
+        Update: {
+          calculator_defaults?: Json
+          faqs?: Json
+          hero_headline?: string
+          hero_subheadline?: string
+          id?: string
+          meta_description?: string
+          meta_title?: string
+          options?: Json
+          process_steps?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      cms_homepage: {
+        Row: {
+          cta_headline: string
+          cta_subtitle: string
+          fallback_reviews: Json
+          faqs: Json
+          guarantee_headline: string
+          guarantee_subtitle: string
+          guarantees: Json
+          hero_headline: string
+          hero_subheadline: string
+          id: string
+          phone_number: string
+          process_headline: string
+          process_steps: Json
+          process_subtitle: string
+          rating_text: string
+          trust_badges: Json
+          updated_at: string
+          why_benefits: Json
+          why_headline: string
+        }
+        Insert: {
+          cta_headline: string
+          cta_subtitle: string
+          fallback_reviews: Json
+          faqs: Json
+          guarantee_headline: string
+          guarantee_subtitle: string
+          guarantees: Json
+          hero_headline: string
+          hero_subheadline: string
+          id?: string
+          phone_number?: string
+          process_headline: string
+          process_steps: Json
+          process_subtitle: string
+          rating_text?: string
+          trust_badges?: Json
+          updated_at?: string
+          why_benefits: Json
+          why_headline: string
+        }
+        Update: {
+          cta_headline?: string
+          cta_subtitle?: string
+          fallback_reviews?: Json
+          faqs?: Json
+          guarantee_headline?: string
+          guarantee_subtitle?: string
+          guarantees?: Json
+          hero_headline?: string
+          hero_subheadline?: string
+          id?: string
+          phone_number?: string
+          process_headline?: string
+          process_steps?: Json
+          process_subtitle?: string
+          rating_text?: string
+          trust_badges?: Json
+          updated_at?: string
+          why_benefits?: Json
+          why_headline?: string
+        }
+        Relationships: []
+      }
+      cms_services: {
+        Row: {
+          description: Json
+          faqs: Json
+          hero_headline: string
+          hero_subheadline: string
+          icon_name: string
+          id: string
+          meta_description: string
+          meta_title: string
+          name: string
+          pricing_factors: Json
+          process_steps: Json
+          quote_form_project_type: string
+          related_services: Json
+          short_name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          description: Json
+          faqs?: Json
+          hero_headline: string
+          hero_subheadline: string
+          icon_name: string
+          id?: string
+          meta_description: string
+          meta_title: string
+          name: string
+          pricing_factors: Json
+          process_steps: Json
+          quote_form_project_type: string
+          related_services?: Json
+          short_name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          description?: Json
+          faqs?: Json
+          hero_headline?: string
+          hero_subheadline?: string
+          icon_name?: string
+          id?: string
+          meta_description?: string
+          meta_title?: string
+          name?: string
+          pricing_factors?: Json
+          process_steps?: Json
+          quote_form_project_type?: string
+          related_services?: Json
+          short_name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      communications: {
+        Row: {
+          direction: string
+          id: string
+          lead_id: string
+          message: string
+          sent_at: string
+          sent_by: string | null
+          subject: string | null
+          type: string
+        }
+        Insert: {
+          direction?: string
+          id?: string
+          lead_id: string
+          message: string
+          sent_at?: string
+          sent_by?: string | null
+          subject?: string | null
+          type?: string
+        }
+        Update: {
+          direction?: string
+          id?: string
+          lead_id?: string
+          message?: string
+          sent_at?: string
+          sent_by?: string | null
+          subject?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "communications_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      estimates: {
+        Row: {
+          accepted_at: string | null
+          amount: number
+          created_at: string
+          created_by: string | null
+          estimate_number: string
+          id: string
+          lead_id: string
+          notes: string | null
+          sent_at: string | null
+          service_type: string
+          status: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          estimate_number: string
+          id?: string
+          lead_id: string
+          notes?: string | null
+          sent_at?: string | null
+          service_type?: string
+          status?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          estimate_number?: string
+          id?: string
+          lead_id?: string
+          notes?: string | null
+          sent_at?: string | null
+          service_type?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estimates_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_files: {
+        Row: {
+          file_name: string
+          file_path: string
+          file_size: number
+          file_type: string
+          id: string
+          lead_id: string
+          uploaded_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          file_name: string
+          file_path: string
+          file_size?: number
+          file_type?: string
+          id?: string
+          lead_id: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          file_type?: string
+          id?: string
+          lead_id?: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_files_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_notes: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          lead_id: string
+          note: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          lead_id: string
+          note: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          lead_id?: string
+          note?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_notes_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_tasks: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          created_by: string | null
+          due_at: string | null
+          id: string
+          lead_id: string
+          status: string
+          title: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_at?: string | null
+          id?: string
+          lead_id: string
+          status?: string
+          title: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_at?: string | null
+          id?: string
+          lead_id?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_tasks_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           created_at: string
           email: string
+          gclid: string | null
           id: string
+          landing_page: string | null
+          last_contacted_at: string | null
           name: string
+          owner_id: string | null
           phone: string
+          referrer: string | null
+          source: string | null
           status: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
         }
         Insert: {
           created_at?: string
           email: string
+          gclid?: string | null
           id?: string
+          landing_page?: string | null
+          last_contacted_at?: string | null
           name: string
+          owner_id?: string | null
           phone: string
+          referrer?: string | null
+          source?: string | null
           status?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
         }
         Update: {
           created_at?: string
           email?: string
+          gclid?: string | null
           id?: string
+          landing_page?: string | null
+          last_contacted_at?: string | null
           name?: string
+          owner_id?: string | null
           phone?: string
+          referrer?: string | null
+          source?: string | null
           status?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
         }
         Relationships: []
       }
@@ -48,14 +549,23 @@ export type Database = {
           approximate_sqft: string | null
           created_at: string
           email: string | null
+          gclid: string | null
           id: string
+          landing_page: string | null
           name: string
           phone: string
           project_type: string
+          referrer: string | null
           roof_material: string | null
           roof_stories: string | null
+          source: string | null
           status: string
           timeline: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
         }
         Insert: {
           additional_details?: string | null
@@ -63,14 +573,23 @@ export type Database = {
           approximate_sqft?: string | null
           created_at?: string
           email?: string | null
+          gclid?: string | null
           id?: string
+          landing_page?: string | null
           name: string
           phone: string
           project_type: string
+          referrer?: string | null
           roof_material?: string | null
           roof_stories?: string | null
+          source?: string | null
           status?: string
           timeline?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
         }
         Update: {
           additional_details?: string | null
@@ -78,14 +597,23 @@ export type Database = {
           approximate_sqft?: string | null
           created_at?: string
           email?: string | null
+          gclid?: string | null
           id?: string
+          landing_page?: string | null
           name?: string
           phone?: string
           project_type?: string
+          referrer?: string | null
           roof_material?: string | null
           roof_stories?: string | null
+          source?: string | null
           status?: string
           timeline?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
         }
         Relationships: []
       }
@@ -115,13 +643,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
+      has_role:
+        | {
+            Args: {
+              _role: Database["public"]["Enums"]["app_role"]
+              _user_id: string
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              _role: Database["public"]["Enums"]["app_role"]
+              _user_id: string
+            }
+            Returns: boolean
+          }
     }
     Enums: {
       app_role: "admin" | "user"
