@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -609,7 +609,7 @@ export default function Admin() {
                       <TableBody>
                         {filteredLeads.map((lead) => (
                           <TableRow key={lead.id}>
-                            <TableCell className="font-medium">{lead.name}</TableCell>
+                            <TableCell className="font-medium"><Link to={`/admin/leads/${lead.id}`} className="hover:text-accent transition-colors">{lead.name}</Link></TableCell>
                             <TableCell>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1.5 text-sm">
